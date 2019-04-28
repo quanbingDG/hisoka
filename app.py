@@ -26,7 +26,7 @@ def index():
 
 @app.route('/', methods=['GET'])
 def _index():
-    return redirect(url_for('index'))File_md5
+    return redirect(url_for('index'))
 
 
 @app.errorhandler(404)
