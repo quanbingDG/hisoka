@@ -43,7 +43,7 @@ def upload_ic():
                 icr = ICR(Name=Name, Cert_no=Certno, File_content=line, Size=getsizeof(line), File_md5=filemd5)
                 db.session.add(icr)
                 db.session.commit()
-    return "ok"
+    return "IC Data Upload Success!"
 
 
 @bp.route('/ec/', methods=['POST'])
@@ -55,14 +55,10 @@ def upload_ec():
         for line in f:
             filemd5 = get_file_md5(line)
             uploaded_file = ECR.get_file_bymd5(filemd5)
-            print("*" * 20)
             if not uploaded_file:
                 _tmp = json.loads(line)
                 creditcode = _tmp.get('ReportHeader')[0].get('CreditCode')
                 ecr = ECR(creditcode = creditcode, File_content=line, Size=getsizeof(line), File_md5=filemd5)
-                print(ECR.creditcode)
-                print(ECR.Size)
-                print(ECR.File_md5)
                 db.session.add(ecr)
                 db.session.commit()
-    return "ok"
+    return "EC Data Upload Success!"

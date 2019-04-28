@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <link rel="shortcut icon" href="/static/images/favicon/h.png" type="image/x-icon">
+    <link rel="icon" href="/static/images/favicon/h.png" type="image/x-icon">
+    <title>HISOKA</title>
+
+    <!--Template Styles-->
+    <link href="/static/css/style.css" rel="stylesheet">
+    <link href="/static/css/scheme/purple.css" rel="stylesheet">
+
+    <!--[if lt IE 9]>
+      <script src="/static/js/html5shiv.js"></script>
+      <script src="/static/js/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+<body>
+    <br>Welcome to HISOKA! {{user}}</br>
+    <br>You can use url "/mock" to mock data!</br>
+    <br>
+        <input type="button" value="/mock/ic/sample"
+        onclick="javascrtpt:window.location.href='http://{{ip}}:8989/mock/ic/sample'">
+    </br>
+    <br>You can use url "/upload" to upload data!</br>
+    <br>
+        <input type="button" value="/upload"
+        onclick="javascrtpt:window.location.href='http://{{ip}}:8989/upload/'">
+    </br>
+</body>
+</html>

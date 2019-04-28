@@ -10,6 +10,7 @@
 import json
 import os
 import uuid
+import socket
 from functools import partial
 from const import UPLOAD_DIR
 import hashlib
@@ -103,3 +104,18 @@ def get_file_size(bytesize, precision=2):
         if bytesize >= factor:
             break
     return '%.*f %s' % (precision, bytesize / factor, suffix)
+
+
+def get_host_ip():
+    """
+    get the host ip
+    :return: ip
+    """
+    try:
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        s.connect(('8.8.8.8', 80))
+        ip = s.getsockname()[0]
+    finally:
+        s.close()
+
+    return ip
