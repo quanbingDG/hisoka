@@ -8,19 +8,34 @@
 """
 
 
-from flask import Flask
+from flask import Flask, redirect, url_for, render_template
 import mock
+import upload_data
+from ext import db
 
-app = Flask(__name__, static_folder='./static')
+
+app = Flask(__name__, static_folder='./static', template_folder='./template')
 app.config.from_object('config')
+db.init_app(app)
+
+
+@app.route('/index/', methods=['GET'])
+def index():
+    return render_template('index.html')
+
+
+@app.route('/', methods=['GET'])
+def _index():
+    return redirect(url_for('index'))File_md5
+
+
+@app.errorhandler(404)
+def not_found(error):
+    return render_template('mock_error.html'),404
+
+
 app.register_blueprint(mock.bp)
-
-import xmltodict,json
-
-xmlfile = open(r'F:\项目文档\Plutus\03 个人征信标准化\征信2.0\九江项目\2代格式.xml', 'r', encoding='utf8')
-xmlfile_ = xmlfile.read()
-json_ = xmltodict.parse(xmlfile_)
-print(json.dumps(json_, ensure_ascii=False))
+app.register_blueprint(upload_data.bp)
 
 
-# app.run(host='0.0.0.0', port=8989)
+app.run(host='0.0.0.0', port=8989)

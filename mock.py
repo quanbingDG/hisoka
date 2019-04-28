@@ -8,7 +8,7 @@
 """
 
 import os
-from flask import Blueprint, redirect, url_for, render_template, jsonify, request
+from flask import Blueprint, redirect, url_for, jsonify, request
 from config import mock_data_dir
 from utils import load_hfsd, loads_hfsd
 

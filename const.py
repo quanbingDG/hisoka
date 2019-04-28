@@ -8,6 +8,7 @@
 """
 
 HOSTNAME = '192.168.234.128'
-USERNAME = 'root'
-PASSWD = 'root'
-DBNAME = 'r'
+USERNAME = 'gang'
+PASSWD = 'gang'
+DBNAME = 'hisoka'
+UPLOAD_DIR = 'upload_dir'

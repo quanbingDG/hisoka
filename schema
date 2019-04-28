@@ -1,0 +1,18 @@
+CREATE TABLE `icr_data` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `Name` varchar(512) NOT NULL,
+  `Cert_no` varchar(128) NOT NULL,
+  `File_content` text NOT NULL,
+  `Upload_time` datetime NOT NULL,
+  `Size` int(11) unsigned NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `ecr_data` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `creditcode` varchar(512) NOT NULL,
+  `File_content` text NOT NULL,
+  `Upload_time` datetime NOT NULL,
+  `Size` int(11) unsigned NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

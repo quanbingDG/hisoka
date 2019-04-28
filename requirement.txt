@@ -4,3 +4,4 @@ Flask-SQLAlchemy
 PyMySQL
 flask_mako
 jinja2
+python-magic==0.4.14

@@ -9,6 +9,14 @@
 
 import json
 import os
+import uuid
+from functools import partial
+from const import UPLOAD_DIR
+import hashlib
+
+
+HERE = os.path.abspath(os.path.dirname(__file__))
+get_file_path = partial(os.path.join, HERE, UPLOAD_DIR)
 
 
 def write_txt(filename='test.csv', info='', mode='a'):
@@ -66,3 +74,32 @@ def singleton(cls):
     return _singleton
 
 
+def hash_filename(filename):
+    _, _, suffix = filename.rpartition('.')
+    return '{0}.{1}'.format(uuid.uuid4().hex, suffix)
+
+
+def get_file_md5(f):
+    h = hashlib.md5()
+    while True:
+        if not f:
+            break
+        h.update(f)
+        return h.hexdigest()
+
+
+def get_file_size(bytesize, precision=2):
+    abbrevs = (
+        (1 << 50, 'PB'),
+        (1 << 40, 'TB'),
+        (1 << 30, 'GB'),
+        (1 << 20, 'MB'),
+        (1 << 10, 'kB'),
+        (1, 'bytes')
+    )
+    if bytesize == 1:
+        return '1 byte'
+    for factor, suffix in abbrevs:
+        if bytesize >= factor:
+            break
+    return '%.*f %s' % (precision, bytesize / factor, suffix)
