@@ -36,6 +36,10 @@ class ICR(db.Model):
     def get_file_bymd5(cls,file_md5):
         return cls.query.filter_by(File_md5=file_md5).first()
 
+    @classmethod
+    def get_file_by_certno_name(cls, name, certno):
+        return cls.query.filter_by(Name=name, Cert_no=certno).first()
+
 
 class ECR(db.Model):
     __tablename__ = 'ecr_data'
@@ -57,3 +61,7 @@ class ECR(db.Model):
     @classmethod
     def get_file_bymd5(cls, file_md5):
         return cls.query.filter_by(File_md5=file_md5).first()
+
+    @classmethod
+    def get_file_by_creditcode(cls, creditcode):
+        return cls.query.filter_by(creditcode=creditcode).first()
