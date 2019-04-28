@@ -7,15 +7,16 @@
 @time: 2019-04-11 17:25
 """
 
-import os
+import json
 from flask import Blueprint, redirect, url_for, jsonify, request
 from config import mock_data_dir
 from utils import load_hfsd, loads_hfsd
+from models import ICR, ECR
 
 
 bp = Blueprint('mock', __name__, url_prefix='/mock')
-global ic_dict, ec_dict
-ic_dict, ec_dict = {}, {}
+# global ic_dict, ec_dict
+# ic_dict, ec_dict = {}, {}
 
 
 def check_param(queryString, param_list):
@@ -30,8 +31,10 @@ def check_param(queryString, param_list):
 def mock_ic():
     param_list = ['name', 'certno']
     if check_param(request.query_string, param_list = param_list):
-        k = str(request.args.get('name')) + str(request.args.get('certno'))
-        return jsonify(ic_dict[k]) if k in ic_dict.keys() else f"未找到对应的ic数据，{k}"
+        name = str(request.args.get('name')).strip()
+        certno = str(request.args.get('certno')).strip()
+        query_re = ICR.get_file_by_certno_name(name, certno)
+        return query_re.File_content if query_re else f"keys name:{name}  certno:{certno} 未获取到数据"
     else:
         return f"/mock/ic接口需要参数 {param_list} "
 
@@ -45,8 +48,9 @@ def mock_ic_sample():
 def mock_ec():
     param_list = ['creditcode']
     if check_param(request.query_string, param_list = param_list):
-        k = str(request.args.get('creditcode'))
-        return jsonify(ec_dict[k]) if k in ec_dict.keys() else f"未找到对应的ec数据，creditcode : {k}"
+        creditcode = str(request.args.get('creditcode'))
+        query_re = ECR.get_file_by_creditcode(creditcode)
+        return query_re.File_content if query_re else f"keys name:{creditcode}  未获取到数据"
     else:
         return f"/mock/ec接口需要参数 {param_list} "
 
@@ -61,13 +65,13 @@ def mock_sc():
     pass
 
 
-@bp.route('/reload/')
+# @bp.route('/reload/')
 def data_reload():
     load_mock_data_hfsd()
     return jsonify({"message":"data reload success", "stats":200})
 
 
-@bp.before_app_first_request
+# @bp.before_app_first_request
 def load_mock_data_hfsd():
     print("starting....load data")
 
